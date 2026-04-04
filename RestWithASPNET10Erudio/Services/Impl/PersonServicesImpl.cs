@@ -1,52 +1,53 @@
 ﻿using RestWithASPNET10Erudio.Model;
+using RestWithASPNET10Erudio.Model.Context;
 
 namespace RestWithASPNET10Erudio.Services.Impl
 {
     public class PersonServicesImpl : IPersonServices
     {
-        public Person FindById(long id)
+        
+        private MSSQLContext _context;
+
+        public PersonServicesImpl(MSSQLContext context)
         {
-            var person = MockPerson((int)id);
-            return person;
+            _context = context;
         }
 
         public List<Person> FindAll()
         {
-            List<Person> persons = new();
-            for (int i = 0; i < 8; i++)
-            {
-                persons.Add(MockPerson(i));
-            }
-
-            return persons;
+            return _context.Persons.ToList();
         }
+
+        public Person FindById(long id)
+        {
+            return _context.Persons.Find(id);
+        }
+
         public Person Create(Person person)
         {
-            return new Person();
+            _context.Persons.Add(person);
+            _context.SaveChanges();
+            return person;
         }
         public Person Update(Person person)
         {
+            var existingPerson = _context.Persons.Find(person.Id);
+            
+            if (existingPerson == null) return null;
+            
+            _context.Persons.Entry(existingPerson).CurrentValues.SetValues(person);
+            _context.SaveChanges();
+            
             return person;
         }
 
         public void DeleteById(long id)
         {
-            // Simulate deletion logic
-        }
+            var existingPerson = _context.Persons.Find(id);
 
-        private Person MockPerson(int i )
-        {
-            string gender = (i % 2 == 0) ? "male" : "female";
-            string name = (i % 2 == 0) ? "Jully " : "Jhon ";
-            return new Person
-            {
-                Id = new Random().Next(1, 1000),
-                FirstName = name + i,
-                LastName = "Doe" + i,
-                Address = "123 Main Street" + i,
-                Gender = gender
-            };
-
+            if (existingPerson == null) return;
+            _context.Remove(existingPerson);
+            _context.SaveChanges();
         }
     }
 }
