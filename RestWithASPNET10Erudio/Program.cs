@@ -1,3 +1,4 @@
+using RestWithASPNET10Erudio.Configurations;
 using RestWithASPNET10Erudio.Services;
 using RestWithASPNET10Erudio.Services.Impl;
 
@@ -6,6 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+//adicionando a configuração do banco de dados
+builder.Services.AddDatabaseConfiguration(builder.Configuration);
 
 // =============================
 // 🔹 LIFETIMES (ESCOPOS) NO .NET DI
@@ -43,7 +47,7 @@ builder.Services.AddControllers();
 // - utilitários
 //
 // Exemplo:
-builder.Services.AddSingleton<MathService>();
+//builder.Services.AddSingleton<MathService>();
 
 // Nesse caso:
 // - MathService será criado uma única vez
