@@ -6,9 +6,9 @@ namespace RestWithASPNET10Erudio.Services.Impl
     public class PersonServicesImpl : IPersonServices
     {
         
-        private IPersonRepository _personRepository;
+        private IRepository<Person> _personRepository;
 
-        public PersonServicesImpl(IPersonRepository personRepository)
+        public PersonServicesImpl(IRepository<Person> personRepository)
         {
             _personRepository = personRepository;
         }
