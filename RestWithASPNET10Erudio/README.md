@@ -6,7 +6,7 @@ API RESTful construída com **ASP.NET Core 10** durante o curso de REST APIs do 
 
 ## 📋 Visão Geral
 
-Esta é uma API de cadastro de pessoas (`Person`) que implementa um **CRUD completo** seguindo as melhores práticas de arquitetura de software, incluindo o padrão **Repository** e injeção de dependência.
+Esta é uma API RESTful de cadastro de **Pessoas** e **Livros** que implementa um **CRUD completo** seguindo as melhores práticas de arquitetura de software, incluindo o padrão **Repository**, migrações automatizadas com **Evolve** e injeção de dependência.
 
 ---
 
@@ -38,6 +38,18 @@ ORM (Object-Relational Mapper) que abstrai o banco de dados relacional. Permite 
 - Mapeia classes C# (`Person`) para tabelas do banco (`person`)
 - Gerencia conexões, consultas e migrações
 - Fornece o `DbContext` como unidade de trabalho
+
+### 🔄 Evolve
+
+Ferramenta de migração de banco de dados baseada em arquivos SQL versionados. Inspirada no Flyway, o Evolve executa scripts SQL em ordem crescente de versão para criar e evoluir o schema do banco.
+
+**Pacote:** `Evolve` `v3.2.0`
+
+**Como funciona:**
+- Escaneia as pastas `db/migrations` e `db/dataset`
+- Executa scripts `.sql` em ordem numérica (V1, V2, V3...)
+- Controla quais migrações já foram aplicadas via tabela de controle
+- Só executa em ambiente de desenvolvimento (`IsDevelopment()`)
 
 ### 🏛️ SQL Server (MSSQL)
 
@@ -107,11 +119,14 @@ Controller  →  Service  →  Repository  →  DbContext  →  SQL Server
 RestWithASPNET10Erudio/
 ├── Configurations/
 │   ├── DatabaseConfig.cs      # Configuração do EF Core + SQL Server
+│   ├── EvolveConfig.cs        # Configuração do Evolve (migrações)
 │   └── LoggingConfig.cs       # Configuração do Serilog
 ├── Controllers/
-│   └── PersonController.cs    # Endpoints REST (GET, POST, PUT, DELETE)
+│   ├── PersonController.cs    # Endpoints REST de Person
+│   └── BookController.cs      # Endpoints REST de Book
 ├── Model/
 │   ├── Person.cs              # Entidade mapeada para tabela "person"
+│   ├── Book.cs                # Entidade mapeada para tabela "books"
 │   └── Context/
 │       └── MSSQLContext.cs    # DbContext do Entity Framework
 ├── Repositories/
@@ -123,6 +138,9 @@ RestWithASPNET10Erudio/
 │   └── Impl/
 │       └── PersonServicesImpl.cs # Regras de negócio
 ├── Utils/                     # Classes utilitárias
+├── db/
+│   ├── migrations/            # Scripts de migração (V1, V3...)
+│   └── dataset/               # Scripts de dados iniciais (V2, V4...)
 ├── Program.cs                 # Ponto de entrada e configuração DI
 ├── appsettings.json           # Configurações (connection string, Serilog)
 └── RestWithASPNET10Erudio.csproj # Dependências e target framework
@@ -139,6 +157,11 @@ RestWithASPNET10Erudio/
 | `POST` | `/api/person` | Cria uma nova pessoa |
 | `PUT` | `/api/person` | Atualiza uma pessoa existente |
 | `DELETE` | `/api/person/{id}` | Remove uma pessoa |
+| `GET` | `/api/book` | Lista todos os livros |
+| `GET` | `/api/book/{id}` | Busca livro por ID |
+| `POST` | `/api/book` | Cria um novo livro |
+| `PUT` | `/api/book` | Atualiza um livro existente |
+| `DELETE` | `/api/book/{id}` | Remove um livro |
 
 ---
 
