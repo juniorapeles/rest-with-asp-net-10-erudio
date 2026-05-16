@@ -1,8 +1,11 @@
 using RestWithASPNET10Erudio.Configurations;
 using RestWithASPNET10Erudio.Services;
 using RestWithASPNET10Erudio.Services.Impl;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddSerilogLogging();
 
 // Add services to the container.
 
@@ -131,6 +134,21 @@ builder.Services.AddScoped<IPersonServices, PersonServicesImpl>();
 // =============================
 
 var app = builder.Build();
+
+var banner = @"
+███████╗██████╗ ██╗   ██╗██████╗ ██╗ ██████╗      ██████╗ ██╗ ██╗ 
+██╔════╝██╔══██╗██║   ██║██╔══██╗██║██╔═══██╗    ██╔════╝████████╗
+█████╗  ██████╔╝██║   ██║██║  ██║██║██║   ██║    ██║     ╚██╔═██╔╝
+██╔══╝  ██╔══██╗██║   ██║██║  ██║██║██║   ██║    ██║     ████████╗
+███████╗██║  ██║╚██████╔╝██████╔╝██║╚██████╔╝    ╚██████╗╚██╔═██╔╝
+╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝ ╚═════╝      ╚═════╝ ╚═╝ ╚═╝ 
+                                                                  
+";
+
+Console.ForegroundColor = ConsoleColor.Cyan;
+Console.WriteLine(banner);
+Console.ResetColor();
+Log.Information("API INTEGRA iniciada com sucesso em {Time:dd/MM/yyyy HH:mm:ss}", DateTime.UtcNow);
 
 // Configure the HTTP request pipeline.
 
