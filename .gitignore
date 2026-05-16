@@ -1,0 +1,24 @@
+# IDE
+.vs/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build
+bin/
+obj/
+packages/
+*.nupkg
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+Logs/
+
+# Old project directories
+04_RestWithASPNET10Erudio_ScaffoldViaVisualStudio/
+04_RestWithASPNET10Erudio_ScafooldViaTerminal/
