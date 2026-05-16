@@ -22,10 +22,20 @@ namespace RestWithASPNET10Erudio.Configurations
                 }
                 try
                 {
+                    Log.Information("Executing database migrations");
+
                     using var evolveConnection = new SqlConnection(connectionString);
                     var evolve = new Evolve(
                         evolveConnection,
-                        msg => Log.Information(msg))
+                        msg =>
+                        {
+                            if (msg == "Executing Migrate...")
+                            {
+                                return;
+                            }
+
+                            Log.Information("{MigrationMessage}", msg);
+                        })
                     {
                         Locations = new[] { "db/migrations","db/dataset" },
                         IsEraseDisabled = true,
@@ -33,9 +43,10 @@ namespace RestWithASPNET10Erudio.Configurations
                     };
                     evolve.Migrate();
 
-                }catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
-                    Log.Error(ex, "An error occurred while migrating the database.");
+                    Log.Error(ex, "Database migration failed");
                     throw;
                 }
             }

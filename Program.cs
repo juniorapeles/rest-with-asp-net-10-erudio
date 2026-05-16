@@ -18,14 +18,32 @@ try
     builder.Services.AddEvolveConfiguration(builder.Configuration, builder.Environment);
     builder.Services.AddScoped<IPersonServices, PersonServicesImpl>();
     builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+    builder.Services.AddScoped<IBookServices, BookServicesImpl>();
+    builder.Services.AddScoped<IBookRepository, BookRepository>();
+
 
     var app = builder.Build();
+    var banner = @"
+        ███████╗██████╗ ██╗   ██╗██████╗ ██╗ ██████╗      ██████╗ ██╗ ██╗
+        ██╔════╝██╔══██╗██║   ██║██╔══██╗██║██╔═══██╗    ██╔════╝████████╗
+        █████╗  ██████╔╝██║   ██║██║  ██║██║██║   ██║    ██║     ╚██╔═██╔╝
+        ██╔══╝  ██╔══██╗██║   ██║██║  ██║██║██║   ██║    ██║     ████████╗
+        ███████╗██║  ██║╚██████╔╝██████╔╝██║╚██████╔╝    ╚██████╗╚██╔═██╔╝
+        ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝ ╚═════╝      ╚═════╝ ╚═╝ ╚═╝
+        ";
+
+    Console.ForegroundColor = ConsoleColor.Cyan;
+    Console.WriteLine(banner);
+    Console.ResetColor();
 
     app.Lifetime.ApplicationStarted.Register(() =>
     {
-        var addresses = app.Urls.Count > 0 ? string.Join(", ", app.Urls) : "No bound URLs reported";
+        var addresses = app.Urls.Any()
+            ? string.Join(", ", app.Urls)
+            : "No bound URLs reported";
+
         Log.Information(
-            "Application started. Environment: {Environment}; ContentRoot: {ContentRoot}; Urls: {Urls}",
+            "Application started. Environment={Environment}; ContentRoot={ContentRoot}; Urls={Urls}",
             app.Environment.EnvironmentName,
             app.Environment.ContentRootPath,
             addresses);
