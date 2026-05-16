@@ -56,7 +56,7 @@ namespace RestWithASPNET10Erudio.Controllers
         {
             _logger.LogInformation("Updating person with ID: {id}", person.Id);
             var createdPerson = _personService.Update(person);
-            if (person == null)
+            if (createdPerson == null)
             {
                 _logger.LogWarning("Failed to update Person with ID: {id}", person.Id);
                 return NotFound();

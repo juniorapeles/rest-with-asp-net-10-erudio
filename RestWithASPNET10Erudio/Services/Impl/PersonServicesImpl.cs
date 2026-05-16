@@ -1,53 +1,48 @@
 ﻿using RestWithASPNET10Erudio.Model;
-using RestWithASPNET10Erudio.Model.Context;
+using RestWithASPNET10Erudio.Repositories;
 
 namespace RestWithASPNET10Erudio.Services.Impl
 {
     public class PersonServicesImpl : IPersonServices
     {
         
-        private MSSQLContext _context;
+        private IPersonRepository _personRepository;
 
-        public PersonServicesImpl(MSSQLContext context)
+        public PersonServicesImpl(IPersonRepository personRepository)
         {
-            _context = context;
+            _personRepository = personRepository;
         }
 
         public List<Person> FindAll()
         {
-            return _context.Persons.ToList();
+            return _personRepository.FindAll();
         }
 
         public Person FindById(long id)
         {
-            return _context.Persons.Find(id);
+            return _personRepository.FindById(id);
         }
 
         public Person Create(Person person)
         {
-            _context.Persons.Add(person);
-            _context.SaveChanges();
-            return person;
+            return _personRepository.Create(person);
         }
         public Person Update(Person person)
         {
-            var existingPerson = _context.Persons.Find(person.Id);
-            
+            var existingPerson = _personRepository.FindById(person.Id);
+
             if (existingPerson == null) return null;
             
-            _context.Persons.Entry(existingPerson).CurrentValues.SetValues(person);
-            _context.SaveChanges();
-            
+            _personRepository.Update(person);
             return person;
         }
 
         public void DeleteById(long id)
         {
-            var existingPerson = _context.Persons.Find(id);
+            var existingPerson = _personRepository.FindById(id);
 
             if (existingPerson == null) return;
-            _context.Remove(existingPerson);
-            _context.SaveChanges();
+            _personRepository.DeleteById(id);
         }
     }
 }
