@@ -17,9 +17,11 @@ try
     builder.Services.AddDatabaseConfiguration(builder.Configuration);
     builder.Services.AddEvolveConfiguration(builder.Configuration, builder.Environment);
     builder.Services.AddScoped<IPersonServices, PersonServicesImpl>();
-    builder.Services.AddScoped<IPersonRepository, PersonRepository>();
     builder.Services.AddScoped<IBookServices, BookServicesImpl>();
-    builder.Services.AddScoped<IBookRepository, BookRepository>();
+
+    builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+    builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+
 
 
     var app = builder.Build();

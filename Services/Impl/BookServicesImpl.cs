@@ -6,9 +6,9 @@ namespace RestWithASPNET10Erudio.Services.Impl
     public class BookServicesImpl : IBookServices
     {
         
-        private IBookRepository _BookRepository;
+        private IRepository<Book> _BookRepository;
 
-        public BookServicesImpl(IBookRepository BookRepository)
+        public BookServicesImpl(IRepository<Book> BookRepository)
         {
             _BookRepository = BookRepository;
         }
