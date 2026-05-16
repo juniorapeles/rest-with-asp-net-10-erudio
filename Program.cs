@@ -5,40 +5,53 @@ using RestWithASPNET10Erudio.Services;
 using RestWithASPNET10Erudio.Services.Impl;
 using Serilog;
 
-var builder = WebApplication.CreateBuilder(args);
+try
+{
+    var builder = WebApplication.CreateBuilder(args);
 
-builder.AddSerilogLogging();
+    builder.AddSerilogLogging();
 
+    Log.Information("Starting application bootstrap");
 
-builder.Services.AddControllers();
+    builder.Services.AddControllers();
+    builder.Services.AddDatabaseConfiguration(builder.Configuration);
+    builder.Services.AddEvolveConfiguration(builder.Configuration, builder.Environment);
+    builder.Services.AddScoped<IPersonServices, PersonServicesImpl>();
+    builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 
-builder.Services.AddDatabaseConfiguration(builder.Configuration);
-builder.Services.AddEvolveConfiguration(builder.Configuration, builder.Environment);
-builder.Services.AddScoped<IPersonServices, PersonServicesImpl>();
-builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+    var app = builder.Build();
 
-var app = builder.Build();
+    app.Lifetime.ApplicationStarted.Register(() =>
+    {
+        var addresses = app.Urls.Count > 0 ? string.Join(", ", app.Urls) : "No bound URLs reported";
+        Log.Information(
+            "Application started. Environment: {Environment}; ContentRoot: {ContentRoot}; Urls: {Urls}",
+            app.Environment.EnvironmentName,
+            app.Environment.ContentRootPath,
+            addresses);
+    });
 
-var banner = @"
-███████╗██████╗ ██╗   ██╗██████╗ ██╗ ██████╗      ██████╗ ██╗ ██╗ 
-██╔════╝██╔══██╗██║   ██║██╔══██╗██║██╔═══██╗    ██╔════╝████████╗
-█████╗  ██████╔╝██║   ██║██║  ██║██║██║   ██║    ██║     ╚██╔═██╔╝
-██╔══╝  ██╔══██╗██║   ██║██║  ██║██║██║   ██║    ██║     ████████╗
-███████╗██║  ██║╚██████╔╝██████╔╝██║╚██████╔╝    ╚██████╗╚██╔═██╔╝
-╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝ ╚═════╝      ╚═════╝ ╚═╝ ╚═╝ 
-                                                                  
-";
+    app.Lifetime.ApplicationStopping.Register(() =>
+        Log.Information("Application stopping"));
 
-Console.ForegroundColor = ConsoleColor.Cyan;
-Console.WriteLine(banner);
-Console.ResetColor();
-Log.Information("API INTEGRA iniciada com sucesso em {Time:dd/MM/yyyy HH:mm:ss}", DateTime.UtcNow);
+    app.Lifetime.ApplicationStopped.Register(() =>
+        Log.Information("Application stopped"));
 
+    if (!app.Environment.IsDevelopment())
+    {
+        app.UseHttpsRedirection();
+    }
 
-app.UseHttpsRedirection();
+    app.UseAuthorization();
+    app.MapControllers();
 
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
+}
