@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RestWithASPNET10Erudio.data;
 using RestWithASPNET10Erudio.Model;
 using RestWithASPNET10Erudio.Services;
 
@@ -39,30 +40,30 @@ namespace RestWithASPNET10Erudio.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Person person)
+        public IActionResult Post([FromBody] PersonDTO dto)
         {
-            _logger.LogInformation("Creating new Person: {firstName}", person.FirstName);
-            var createdPerson = _personService.Create(person);
-            if (person == null)
+            _logger.LogInformation("Creating new Person: {firstName}", dto.FirstName);
+            var createdPerson = _personService.Create(dto);
+            if (dto == null)
             {
-                _logger.LogWarning("Failed to create Person: {firstName}", person.FirstName);
+                _logger.LogWarning("Failed to create Person: {firstName}", dto.FirstName);
                 return NotFound();
             }
-            return Ok(person);
+            return Ok(dto);
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody] Person person)
+        public IActionResult Put([FromBody] PersonDTO dto)
         {
-            _logger.LogInformation("Updating person with ID: {id}", person.Id);
-            var createdPerson = _personService.Update(person);
+            _logger.LogInformation("Updating person with ID: {id}", dto.Id);
+            var createdPerson = _personService.Update(dto);
             if (createdPerson == null)
             {
-                _logger.LogWarning("Failed to update Person with ID: {id}", person.Id);
+                _logger.LogWarning("Failed to update Person with ID: {id}", dto.Id);
                 return NotFound();
             }
-            _logger.LogDebug("Person with ID: {id} updated successfully: {firstName}", person.Id, person.FirstName);
-            return Ok(person);
+            _logger.LogDebug("Person with ID: {id} updated successfully: {firstName}", dto.Id, dto.FirstName);
+            return Ok(dto);
         }
 
         [HttpDelete("{id}")]

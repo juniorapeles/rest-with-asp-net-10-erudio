@@ -1,13 +1,15 @@
-﻿using RestWithASPNET10Erudio.Model;
+﻿
+
+using RestWithASPNET10Erudio.data;
 
 namespace RestWithASPNET10Erudio.Services
 {
     public interface IPersonServices
     {
-        Person Create(Person person);
-        Person FindById(long id);
-        List<Person> FindAll();
-        Person Update(Person person);
+        PersonDTO Create(PersonDTO PersonDTO);
+        PersonDTO FindById(long id);
+        List<PersonDTO> FindAll();
+        PersonDTO Update(PersonDTO PersonDTO);
         void DeleteById(long id);
     }
 }

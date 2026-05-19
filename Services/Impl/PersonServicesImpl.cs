@@ -1,4 +1,6 @@
-﻿using RestWithASPNET10Erudio.Model;
+﻿using RestWithASPNET10Erudio.data;
+using RestWithASPNET10Erudio.Data.Converter.Impl;
+using RestWithASPNET10Erudio.Model;
 using RestWithASPNET10Erudio.Repositories;
 
 namespace RestWithASPNET10Erudio.Services.Impl
@@ -7,34 +9,38 @@ namespace RestWithASPNET10Erudio.Services.Impl
     {
         
         private IRepository<Person> _personRepository;
+        private readonly PersonConverter _personConverter;
 
         public PersonServicesImpl(IRepository<Person> personRepository)
         {
             _personRepository = personRepository;
+            _personConverter = new PersonConverter();
         }
 
-        public List<Person> FindAll()
+        public List<PersonDTO> FindAll()
         {
-            return _personRepository.FindAll();
+            return _personConverter.ParseList(_personRepository.FindAll());
         }
 
-        public Person FindById(long id)
+        public PersonDTO FindById(long id)
         {
-            return _personRepository.FindById(id);
+            return _personConverter.Parse(_personRepository.FindById(id));
         }
 
-        public Person Create(Person person)
+        public PersonDTO Create(PersonDTO personDTO)
         {
-            return _personRepository.Create(person);
+            var person = _personConverter.Parse(personDTO);
+            var createdPerson = _personRepository.Create(person);
+            return _personConverter.Parse(createdPerson);
         }
-        public Person Update(Person person)
+        public PersonDTO Update(PersonDTO personDTO)
         {
-            var existingPerson = _personRepository.FindById(person.Id);
+            var existingPerson = _personRepository.FindById(personDTO.Id);
 
             if (existingPerson == null) return null;
             
-            _personRepository.Update(person);
-            return person;
+            _personRepository.Update(_personConverter.Parse(personDTO));
+            return _personConverter.Parse(existingPerson);
         }
 
         public void DeleteById(long id)
