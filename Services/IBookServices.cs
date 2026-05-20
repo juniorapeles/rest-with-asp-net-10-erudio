@@ -1,13 +1,12 @@
-﻿using RestWithASPNET10Erudio.Model;
-
+﻿using RestWithASPNET10Erudio.data;
 namespace RestWithASPNET10Erudio.Services
 {
     public interface IBookServices
     {
-        Book Create(Book Book);
-        Book FindById(long id);
-        List<Book> FindAll();
-        Book Update(Book Book);
+        BookDTO Create(BookDTO dto);
+        BookDTO FindById(long id);
+        List<BookDTO> FindAll();
+        BookDTO Update(BookDTO dto);
         void DeleteById(long id);
     }
 }

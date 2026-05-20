@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RestWithASPNET10Erudio.data;
 using RestWithASPNET10Erudio.Model;
 using RestWithASPNET10Erudio.Services;
 
@@ -39,30 +40,30 @@ namespace RestWithASPNET10Erudio.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Book Book)
+        public IActionResult Post([FromBody] BookDTO dto)
         {
-            _logger.LogInformation("Creating new Book: {firstName}", Book.Title);
-            var createdBook = _BookService.Create(Book);
-            if (Book == null)
+            _logger.LogInformation("Creating new Book: {firstName}", dto.Title);
+            var createdBook = _BookService.Create(dto);
+            if (dto == null)
             {
-                _logger.LogWarning("Failed to create Book: {firstName}", Book.Title);
+                _logger.LogWarning("Failed to create Book: {firstName}", dto.Title);
                 return NotFound();
             }
-            return Ok(Book);
+            return Ok(dto);
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody] Book Book)
+        public IActionResult Put([FromBody] BookDTO dto)
         {
-            _logger.LogInformation("Updating Book with ID: {id}", Book.Id);
-            var createdBook = _BookService.Update(Book);
+            _logger.LogInformation("Updating Book with ID: {id}", dto.Id);
+            var createdBook = _BookService.Update(dto);
             if (createdBook == null)
             {
-                _logger.LogWarning("Failed to update Book with ID: {id}", Book.Id);
+                _logger.LogWarning("Failed to update Book with ID: {id}", dto.Id);
                 return NotFound();
             }
-            _logger.LogDebug("Book with ID: {id} updated successfully: {Title}", Book.Id, Book.Title);
-            return Ok(Book);
+            _logger.LogDebug("Book with ID: {id} updated successfully: {Title}", dto.Id, dto.Title);
+            return Ok(dto);
         }
 
         [HttpDelete("{id}")]
