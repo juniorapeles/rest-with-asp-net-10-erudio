@@ -1,16 +1,16 @@
-using RestWithASPNET10Erudio.Data.Converter.Impl.V1;
-using RestWithASPNET10Erudio.Data.DTO.V1;
+using RestWithASPNET10Erudio.Data.Converter.Impl.V2;
+using RestWithASPNET10Erudio.Data.DTO.V2;
 using RestWithASPNET10Erudio.Model;
 using RestWithASPNET10Erudio.Repositories;
 
 namespace RestWithASPNET10Erudio.Services.Impl
 {
-    public class PersonServicesImpl : IPersonServices
+    public class PersonServicesImplV2 : IPersonServicesV2
     {
         private readonly IRepository<Person> _personRepository;
         private readonly PersonConverter _personConverter;
 
-        public PersonServicesImpl(IRepository<Person> personRepository)
+        public PersonServicesImplV2(IRepository<Person> personRepository)
         {
             _personRepository = personRepository;
             _personConverter = new PersonConverter();

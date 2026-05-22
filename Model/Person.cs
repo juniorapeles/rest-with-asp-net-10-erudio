@@ -25,6 +25,9 @@ namespace RestWithASPNET10Erudio.Model
         [Required]
         [MaxLength(6)]
         [Column("gender", TypeName = "varchar(6")] // Male, Female, Other
-        public string Gender { get; set; }   
+        public string Gender { get; set; }
+
+        [NotMapped]
+        public DateTime? BirthDay { get; set; }
     }
 }

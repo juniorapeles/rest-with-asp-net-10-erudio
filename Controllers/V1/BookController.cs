@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RestWithASPNET10Erudio.data;
-using RestWithASPNET10Erudio.Model;
+using RestWithASPNET10Erudio.Data.DTO.V1;
 using RestWithASPNET10Erudio.Services;
 
-namespace RestWithASPNET10Erudio.Controllers
+namespace RestWithASPNET10Erudio.Controllers.V1
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/v1")]
     public class BookController : ControllerBase
     {
         private readonly IBookServices _BookService;
@@ -44,12 +43,14 @@ namespace RestWithASPNET10Erudio.Controllers
         {
             _logger.LogInformation("Creating new Book: {firstName}", dto.Title);
             var createdBook = _BookService.Create(dto);
-            if (dto == null)
+            if (createdBook == null)
             {
-                _logger.LogWarning("Failed to create Book: {firstName}", dto.Title);
+                _logger.LogWarning("Failed to create Book: {Title}", dto.Title);
                 return NotFound();
             }
-            return Ok(dto);
+            Response.Headers.Add("X-API-Deprecated", "true");
+            Response.Headers.Add("X-API-Deprecation-Date", "2026-12-31");
+            return Ok(createdBook);
         }
 
         [HttpPut]

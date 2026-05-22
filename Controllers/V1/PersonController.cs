@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RestWithASPNET10Erudio.data;
-using RestWithASPNET10Erudio.Model;
+using RestWithASPNET10Erudio.Data.DTO.V1;
 using RestWithASPNET10Erudio.Services;
 
-namespace RestWithASPNET10Erudio.Controllers
+namespace RestWithASPNET10Erudio.Controllers.V1
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/v1")]
     public class PersonController : ControllerBase
     {
         private readonly IPersonServices _personService;
@@ -44,12 +43,12 @@ namespace RestWithASPNET10Erudio.Controllers
         {
             _logger.LogInformation("Creating new Person: {firstName}", dto.FirstName);
             var createdPerson = _personService.Create(dto);
-            if (dto == null)
+            if (createdPerson == null)
             {
                 _logger.LogWarning("Failed to create Person: {firstName}", dto.FirstName);
                 return NotFound();
             }
-            return Ok(dto);
+            return Ok(createdPerson);
         }
 
         [HttpPut]

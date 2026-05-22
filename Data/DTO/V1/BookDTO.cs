@@ -1,8 +1,6 @@
-﻿using RestWithASPNET10Erudio.Model.Base;
-
-namespace RestWithASPNET10Erudio.data
+﻿namespace RestWithASPNET10Erudio.Data.DTO.V1
 {
-    public class BookDTO : BaseEntity
+    public class BookDTO
     {
         public long Id { get; set; }
         public string Title { get; set; }

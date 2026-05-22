@@ -1,5 +1,5 @@
 ﻿using Mapster;
-using RestWithASPNET10Erudio.data;
+using RestWithASPNET10Erudio.Data.DTO.V1;
 using RestWithASPNET10Erudio.Model;
 using RestWithASPNET10Erudio.Repositories;
 

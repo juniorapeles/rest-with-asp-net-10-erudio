@@ -1,8 +1,8 @@
-﻿using RestWithASPNET10Erudio.data;
-using RestWithASPNET10Erudio.Data.Converter.Contract;
+﻿using RestWithASPNET10Erudio.Data.Converter.Contract;
+using RestWithASPNET10Erudio.Data.DTO.V1;
 using RestWithASPNET10Erudio.Model;
 
-namespace RestWithASPNET10Erudio.Data.Converter.Impl
+namespace RestWithASPNET10Erudio.Data.Converter.Impl.V1
 {
     public class PersonConverter : IParser<Person, PersonDTO>, IParser<PersonDTO, Person>
     {
@@ -29,6 +29,7 @@ namespace RestWithASPNET10Erudio.Data.Converter.Impl
                 LastName = origin.LastName,
                 Address = origin.Address,
                 Gender = origin.Gender
+                //BirthDay = origin.BirthDay ?? DateTime.Now
             };
         }
 
