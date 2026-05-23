@@ -15,7 +15,7 @@ O objetivo do projeto é consolidar, na prática, a construção de uma Web API 
 - Mapear entidades com Entity Framework Core
 - Versionar banco com migrations SQL usando Evolve
 - Integrar SQL Server ao projeto
-- Evoluir a API para Swagger, JWT, testes com xUnit e Testcontainers
+- Evoluir a API para Swagger, JWT e testes de integração com Testcontainers
 - Preparar a aplicação para Docker, Kubernetes, Azure e GCP
 - Praticar integração futura com frontend em React JS
 
@@ -30,6 +30,10 @@ O objetivo do projeto é consolidar, na prática, a construção de uma Web API 
 - Repositório genérico
 - **DTOs** para Person e Book (desacoplamento da camada de domínio)
 - **Mapeamento Objeto-Objeto**: `PersonConverter` (via `IParser<O,D>`) para Person e **Mapster** para Book
+- Projeto de testes automatizados com xUnit
+- Asserções fluentes com FluentAssertions
+- Mocks com Moq
+- Coleta de cobertura com coverlet
 
 ## Stack principal
 
@@ -40,6 +44,10 @@ O objetivo do projeto é consolidar, na prática, a construção de uma Web API 
 - Evolve
 - Serilog
 - Mapster
+- xUnit
+- FluentAssertions
+- Moq
+- coverlet.collector
 
 ## Arquitetura
 
@@ -71,6 +79,20 @@ RestWithASPNET10Erudio/
 |- Program.cs
 |- appsettings.json
 `- RestWithASPNET10Erudio.csproj
+
+RestWithASPNET10Erudio.Tests/
+|- Services/
+`- RestWithASPNET10Erudio.Tests.csproj
+```
+
+## Testes automatizados
+
+O repositório já conta com um projeto de testes em `RestWithASPNET10Erudio.Tests`, usando `xUnit` como framework principal, `FluentAssertions` para asserções mais legíveis, `Moq` para mocks e `coverlet.collector` para coleta de cobertura.
+
+Para executar os testes:
+
+```bash
+dotnet test
 ```
 
 ## Endpoints atuais
@@ -103,11 +125,11 @@ dotnet run
 
 ## Descrição curta para portfólio
 
-Projeto de estudo focado na construção de uma API RESTful com ASP.NET Core 10, aplicando CRUD, DTOs, mapeamento objeto-objeto (Mapster e IParser), Entity Framework Core, SQL Server, migrations com Evolve, injeção de dependência e arquitetura em camadas. A aplicação está sendo evoluída como base prática para Swagger, autenticação com JWT, testes com xUnit e Testcontainers, Docker, Kubernetes e deploy em Azure e GCP.
+Projeto de estudo focado na construção de uma API RESTful com ASP.NET Core 10, aplicando CRUD, DTOs, mapeamento objeto-objeto (Mapster e IParser), Entity Framework Core, SQL Server, migrations com Evolve, injeção de dependência, arquitetura em camadas e testes automatizados com xUnit, FluentAssertions, Moq e coverlet. A aplicação segue evoluindo como base prática para Swagger, autenticação com JWT, testes de integração com Testcontainers, Docker, Kubernetes e deploy em Azure e GCP.
 
 ## Descrição média para portfólio
 
-Desenvolvi esta API RESTful em ASP.NET Core 10 como laboratório prático para consolidar conceitos de backend moderno no ecossistema .NET. O projeto já inclui cadastro de pessoas e livros, DTOs para desacoplamento das camadas, mapeamento objeto-objeto com PersonConverter (IParser) e Mapster, persistência com SQL Server, organização em camadas, uso de Entity Framework Core, migrations com Evolve e repositório genérico. A proposta é expandir essa base com Swagger, autenticação JWT, testes automatizados com xUnit e Testcontainers, conteinerização com Docker, orquestração com Kubernetes e integração com React, criando uma trilha completa de aprendizado até cenários de cloud em Azure e GCP.
+Desenvolvi esta API RESTful em ASP.NET Core 10 como laboratório prático para consolidar conceitos de backend moderno no ecossistema .NET. O projeto já inclui cadastro de pessoas e livros, DTOs para desacoplamento das camadas, mapeamento objeto-objeto com PersonConverter (IParser) e Mapster, persistência com SQL Server, organização em camadas, uso de Entity Framework Core, migrations com Evolve, repositório genérico e testes automatizados com xUnit, FluentAssertions, Moq e coverlet. A proposta é expandir essa base com Swagger, autenticação JWT, testes de integração com Testcontainers, conteinerização com Docker, orquestração com Kubernetes e integração com React, criando uma trilha completa de aprendizado até cenários de cloud em Azure e GCP.
 
 ## Licença
 

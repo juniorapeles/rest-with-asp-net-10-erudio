@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="../RestWithASPNET10Erudio.Tests/RestWithASPNET10Erudio.Tests.csproj" Id="a2095d6d-2737-48f2-8fc8-8de7d528ef44" />
   <Project Path="RestWithASPNET10Erudio.csproj" />
 </Solution>
