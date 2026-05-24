@@ -16,7 +16,7 @@ namespace RestWithASPNET10Erudio.Data.Converter.Impl.V2
                 LastName = origin.LastName,
                 Address = origin.Address,
                 Gender = origin.Gender,
-                BirthDay = null
+                BirthDay = DateTime.Now
             };
         }
 

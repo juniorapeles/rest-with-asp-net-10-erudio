@@ -198,10 +198,16 @@ namespace RestWithASPNET10Erudio.Tests
             dto.LastName.Should().Be(expectedDTO.LastName);
             dto.Address.Should().Be(expectedDTO.Address);
             dto.Gender.Should().Be(expectedDTO.Gender);
-            
+            dto.BirthDay.Should().NotBeNull();
+            dto.BirthDay.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(5));
+
             dto.Should()
-                .BeEquivalentTo(expectedDTO, 
-                options => options.Excluding(dto => dto.BirthDay));
+                .BeEquivalentTo(expectedDTO,
+                options => options
+                    .Excluding(dto => dto.BirthDay)
+                    .Excluding(dto => dto.CreatedAt)
+                    .Excluding(dto => dto.IsAdult)
+                    .Excluding(dto => dto.Age));
         }
 
         // Person to PersonDTO conversion tests
@@ -278,9 +284,12 @@ namespace RestWithASPNET10Erudio.Tests
                 LastName = "Gandhi",
                 Address = "Porbandar - India",
                 Gender = "Male",
-                //BirthDay = new DateTime(1869, 10, 2)
                 BirthDay = null
-            });
+            }, options => options
+                .Excluding(dto => dto.BirthDay)
+                .Excluding(dto => dto.CreatedAt)
+                .Excluding(dto => dto.IsAdult)
+                .Excluding(dto => dto.Age));
 
             personDTOList[1].Should().BeEquivalentTo(new PersonDTO
             {
@@ -289,9 +298,17 @@ namespace RestWithASPNET10Erudio.Tests
                 LastName = "Gandhi",
                 Address = "Allahabad - India",
                 Gender = "Female",
-                //BirthDay = new DateTime(1917, 11, 12)
-                BirthDay = null 
-            });
+                BirthDay = null
+            }, options => options
+                .Excluding(dto => dto.BirthDay)
+                .Excluding(dto => dto.CreatedAt)
+                .Excluding(dto => dto.IsAdult)
+                .Excluding(dto => dto.Age));
+
+            personDTOList[0].BirthDay.Should().NotBeNull();
+            personDTOList[1].BirthDay.Should().NotBeNull();
+            personDTOList[0].BirthDay.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(5));
+            personDTOList[1].BirthDay.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(5));
 
             personDTOList[0].FirstName.Should().Be("Mahatma");
             personDTOList[1].FirstName.Should().Be("Indira");

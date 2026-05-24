@@ -30,6 +30,8 @@ O objetivo do projeto é consolidar, na prática, a construção de uma Web API 
 - Repositório genérico
 - **DTOs** para Person e Book (desacoplamento da camada de domínio)
 - **Mapeamento Objeto-Objeto**: `PersonConverter` (via `IParser<O,D>`) para Person e **Mapster** para Book
+- **Versionamento da API** com `V1` e `V2` para `Person`
+- **Serialização JSON customizada** em `Person V2`, com `JsonConverter` para `Gender` e regras de omissão para campos nulos/default
 - Projeto de testes automatizados com xUnit
 - Asserções fluentes com FluentAssertions
 - Mocks com Moq
@@ -57,6 +59,8 @@ O projeto segue uma estrutura em camadas com **DTOs** para desacoplar a represen
 
 O mapeamento entre **DTO** e **Entity** é feito com `PersonConverter` (via `IParser<O,D>`) para Person e **Mapster** para Book, ambos centralizados na camada de serviço.
 
+Na `V2` de `Person`, o contrato JSON também usa serializadores customizados em `JsonSerializers/` e atributos como `JsonIgnore` para controlar a saída da API.
+
 ## Estrutura do projeto
 
 ```text
@@ -68,10 +72,15 @@ RestWithASPNET10Erudio/
 |   |   |- Contract/
 |   |   |   `- IParser.cs
 |   |   `- Impl/
-|   |       `- PersonConverter.cs
+|   |       `- V2/
+|   |           `- PersonConverter.cs
 |   `- DTO/
 |       |- BookDTO.cs
-|       `- PersonDTO.cs
+|       `- V2/
+|           `- PersonDTO.cs
+|- JsonSerializers/
+|   |- DateSerializer.cs
+|   `- GenderSerializer.cs
 |- Model/
 |- Repositories/
 |- Services/
@@ -104,6 +113,11 @@ dotnet test
 - `POST /api/person`
 - `PUT /api/person`
 - `DELETE /api/person/{id}`
+- `GET /api/v2/person`
+- `GET /api/v2/person/{id}`
+- `POST /api/v2/person`
+- `PUT /api/v2/person`
+- `DELETE /api/v2/person/{id}`
 
 ### Book
 

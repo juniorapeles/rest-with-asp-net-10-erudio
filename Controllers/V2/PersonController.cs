@@ -47,6 +47,7 @@ namespace RestWithASPNET10Erudio.Controllers.V2
                 _logger.LogWarning("Failed to create Person: {firstName}", dto.FirstName);
                 return NotFound();
             }
+            createdPerson.Age =20;
             return Ok(createdPerson);
         }
 
