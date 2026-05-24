@@ -204,10 +204,7 @@ namespace RestWithASPNET10Erudio.Tests
             dto.Should()
                 .BeEquivalentTo(expectedDTO,
                 options => options
-                    .Excluding(dto => dto.BirthDay)
-                    .Excluding(dto => dto.CreatedAt)
-                    .Excluding(dto => dto.IsAdult)
-                    .Excluding(dto => dto.Age));
+                    .Excluding(dto => dto.BirthDay));
         }
 
         // Person to PersonDTO conversion tests
@@ -286,10 +283,7 @@ namespace RestWithASPNET10Erudio.Tests
                 Gender = "Male",
                 BirthDay = null
             }, options => options
-                .Excluding(dto => dto.BirthDay)
-                .Excluding(dto => dto.CreatedAt)
-                .Excluding(dto => dto.IsAdult)
-                .Excluding(dto => dto.Age));
+                .Excluding(dto => dto.BirthDay));
 
             personDTOList[1].Should().BeEquivalentTo(new PersonDTO
             {
@@ -300,10 +294,7 @@ namespace RestWithASPNET10Erudio.Tests
                 Gender = "Female",
                 BirthDay = null
             }, options => options
-                .Excluding(dto => dto.BirthDay)
-                .Excluding(dto => dto.CreatedAt)
-                .Excluding(dto => dto.IsAdult)
-                .Excluding(dto => dto.Age));
+                .Excluding(dto => dto.BirthDay));
 
             personDTOList[0].BirthDay.Should().NotBeNull();
             personDTOList[1].BirthDay.Should().NotBeNull();

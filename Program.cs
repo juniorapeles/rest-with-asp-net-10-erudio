@@ -12,7 +12,9 @@ try
 
     Log.Information("Starting application bootstrap");
 
-    builder.Services.AddControllers();
+    builder.Services.AddControllers()
+        .AddContentNegotiation();
+
     builder.Services.AddDatabaseConfiguration(builder.Configuration);
     builder.Services.AddEvolveConfiguration(builder.Configuration, builder.Environment);
     builder.Services.AddScoped<IPersonServices, PersonServicesImpl>();

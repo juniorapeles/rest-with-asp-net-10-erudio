@@ -31,7 +31,7 @@ O objetivo do projeto é consolidar, na prática, a construção de uma Web API 
 - **DTOs** para Person e Book (desacoplamento da camada de domínio)
 - **Mapeamento Objeto-Objeto**: `PersonConverter` (via `IParser<O,D>`) para Person e **Mapster** para Book
 - **Versionamento da API** com `V1` e `V2` para `Person`
-- **Serialização JSON customizada** em `Person V2`, com `JsonConverter` para `Gender` e regras de omissão para campos nulos/default
+- **Content negotiation** com suporte a `application/json` e `application/xml`
 - Projeto de testes automatizados com xUnit
 - Asserções fluentes com FluentAssertions
 - Mocks com Moq
@@ -59,7 +59,7 @@ O projeto segue uma estrutura em camadas com **DTOs** para desacoplar a represen
 
 O mapeamento entre **DTO** e **Entity** é feito com `PersonConverter` (via `IParser<O,D>`) para Person e **Mapster** para Book, ambos centralizados na camada de serviço.
 
-Na `V2` de `Person`, o contrato JSON também usa serializadores customizados em `JsonSerializers/` e atributos como `JsonIgnore` para controlar a saída da API.
+Na `V2` de `Person`, o DTO expõe `Id`, `FirstName`, `LastName`, `Address`, `Gender` e `BirthDay`. A API também respeita o header `Accept` e retorna `406 Not Acceptable` para formatos não suportados.
 
 ## Estrutura do projeto
 
