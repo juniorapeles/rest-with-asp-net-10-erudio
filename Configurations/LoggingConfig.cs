@@ -13,5 +13,40 @@ namespace RestWithASPNET10Erudio.Configurations
                 .CreateLogger();
             builder.Host.UseSerilog();
         }
+
+        public static void UseApplicationLifetimeLogging(this WebApplication app)
+        {
+            var banner = @"
+        ███████╗██████╗ ██╗   ██╗██████╗ ██╗ ██████╗      ██████╗ ██╗ ██╗
+        ██╔════╝██╔══██╗██║   ██║██╔══██╗██║██╔═══██╗    ██╔════╝████████╗
+        █████╗  ██████╔╝██║   ██║██║  ██║██║██║   ██║    ██║     ╚██╔═██╔╝
+        ██╔══╝  ██╔══██╗██║   ██║██║  ██║██║██║   ██║    ██║     ████████╗
+        ███████╗██║  ██║╚██████╔╝██████╔╝██║╚██████╔╝    ╚██████╗╚██╔═██╔╝
+        ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝ ╚═════╝      ╚═════╝ ╚═╝ ╚═╝
+        ";
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(banner);
+            Console.ResetColor();
+
+            app.Lifetime.ApplicationStarted.Register(() =>
+            {
+                var addresses = app.Urls.Any()
+                    ? string.Join(", ", app.Urls)
+                    : "No bound URLs reported";
+
+                Log.Information(
+                    "Application started. Environment={Environment}; ContentRoot={ContentRoot}; Urls={Urls}",
+                    app.Environment.EnvironmentName,
+                    app.Environment.ContentRootPath,
+                    addresses);
+            });
+
+            app.Lifetime.ApplicationStopping.Register(() =>
+                Log.Information("Application stopping"));
+
+            app.Lifetime.ApplicationStopped.Register(() =>
+                Log.Information("Application stopped"));
+        }
     }
 }
