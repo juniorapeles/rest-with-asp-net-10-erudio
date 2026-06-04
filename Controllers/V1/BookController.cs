@@ -18,6 +18,9 @@ namespace RestWithASPNET10Erudio.Controllers.V1
         }
 
         [HttpGet]
+        [ProducesResponseType(200, Type = typeof(List<BookDTO>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Get()
         {
             _logger.LogInformation("Fetching all Books");
@@ -25,6 +28,9 @@ namespace RestWithASPNET10Erudio.Controllers.V1
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(200, Type = typeof(BookDTO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Get(long id)
         {
             _logger.LogInformation("Fetching Book with ID: {id}", id);
@@ -39,6 +45,9 @@ namespace RestWithASPNET10Erudio.Controllers.V1
         }
 
         [HttpPost]
+        [ProducesResponseType(200, Type = typeof(BookDTO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Post([FromBody] BookDTO dto)
         {
             _logger.LogInformation("Creating new Book: {firstName}", dto.Title);
@@ -54,6 +63,9 @@ namespace RestWithASPNET10Erudio.Controllers.V1
         }
 
         [HttpPut]
+        [ProducesResponseType(200, Type = typeof(BookDTO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Put([FromBody] BookDTO dto)
         {
             _logger.LogInformation("Updating Book with ID: {id}", dto.Id);
@@ -68,6 +80,9 @@ namespace RestWithASPNET10Erudio.Controllers.V1
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(204, Type = typeof(BookDTO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Delete(long id)
         {
             _logger.LogInformation("Deleting Book with ID: {id}", id);

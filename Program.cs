@@ -37,8 +37,9 @@ try
     }
 
     app.UseAuthorization();
-    app.MapControllers();
     app.UseSwaggerSpecification();
+
+    app.MapControllers();
 
     app.Run();
 }
