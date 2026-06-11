@@ -6,6 +6,7 @@ namespace RestWithASPNET10Erudio.Controllers.V2
 {
     [ApiController]
     [Route("api/[controller]/v2")]
+    [Produces("application/json")]
     public class PersonController : ControllerBase
     {
         private readonly IPersonServicesV2 _personService;

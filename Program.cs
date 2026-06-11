@@ -1,4 +1,5 @@
 using RestWithASPNET10Erudio.Configurations;
+using RestWithASPNET10Erudio.Controllers;
 using RestWithASPNET10Erudio.Repositories;
 using RestWithASPNET10Erudio.Services;
 using RestWithASPNET10Erudio.Services.Impl;
@@ -18,6 +19,7 @@ try
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddOpenAPIConfig();
     builder.Services.AddSwaggerConfig();
+    builder.Services.AddRouteConfig();
 
     builder.Services.AddDatabaseConfiguration(builder.Configuration);
     builder.Services.AddEvolveConfiguration(builder.Configuration, builder.Environment);
@@ -25,8 +27,6 @@ try
     builder.Services.AddScoped<IPersonServicesV2, PersonServicesImplV2>();
     builder.Services.AddScoped<IBookServices, BookServicesImpl>();
     builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
-
-
 
     var app = builder.Build();
     app.UseApplicationLifetimeLogging();
@@ -38,6 +38,7 @@ try
 
     app.UseAuthorization();
     app.UseSwaggerSpecification();
+    app.UseScalarConfiguration();
 
     app.MapControllers();
 
