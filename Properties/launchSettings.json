@@ -8,6 +8,18 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://localhost:5025"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_HTTP_PORTS": "8080",
+        "MSSQLServerSQLConnection__MSSQLServerSQLConnectionString": "Data Source=host.docker.internal,11433;Initial Catalog=asp_net_10_erudio;User Id=sa;Password=LabSql@2026;TrustServerCertificate=True;"
+      },
+      "publishAllPorts": true,
+      "useSSL": false
     }
   }
 }
