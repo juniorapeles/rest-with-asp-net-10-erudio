@@ -6,6 +6,7 @@ namespace RestWithASPNET10Erudio.Controllers.V1
 {
     [ApiController]
     [Route("api/[controller]/v1")]
+    [Produces("application/json")]
     public class BookController : ControllerBase
     {
         private readonly IBookServices _BookService;
