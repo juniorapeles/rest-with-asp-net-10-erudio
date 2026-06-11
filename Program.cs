@@ -26,6 +26,7 @@ try
     builder.Services.AddScoped<IPersonServices, PersonServicesImpl>();
     builder.Services.AddScoped<IPersonServicesV2, PersonServicesImplV2>();
     builder.Services.AddScoped<IBookServices, BookServicesImpl>();
+    builder.Services.AddScoped<IInstanceInformationService, InstanceInformationService>();
     builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 
     var app = builder.Build();
